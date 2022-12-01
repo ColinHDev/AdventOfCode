@@ -10,13 +10,20 @@ for line in file:
     else:
         calories[elf] += int(line)
 
-mostCaloriesElf: int = 0
-mostCalories: int = 0
+def insertIntoList(list: list, calories: int):
+    if list[2] < calories:
+        list = [list[1], list[2], calories]
+    elif list[1] < calories:
+        list[0] = list[1]
+        list[1] = calories
+    elif list[0] < calories:
+        list[0] = calories
+    return list
+
+mostCalories = [0, 0, 0]
 i: int = 0
 while i < len(calories):
-    if calories[i] > mostCalories:
-        mostCalories = calories[i]
-        mostCaloriesElf = i
+    mostCalories = insertIntoList(mostCalories, calories[i])
     i += 1
 
-print("The elf carrying the most calories is number " + str(mostCaloriesElf + 1) + ", carrying " + str(mostCalories) + " calories.")
+print("The top three elves carry " + str(mostCalories[0] + mostCalories[1] + mostCalories[2]) + " calories together.")
