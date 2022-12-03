@@ -1,18 +1,11 @@
-winCombinations: dict = {"A": "Y", "B": "Z", "C": "X"}
-drawCombinations: dict = {"A": "X", "B": "Y", "C": "Z"}
-
+combinations: dict = {
+    "X": {"A": "Z", "B": "X", "C": "Y"},  # losing
+    "Y": {"A": "X", "B": "Y", "C": "Z"},  # draw
+    "Z": {"A": "Y", "B": "Z", "C": "X"}   # win
+}
 score: int = 0
 for input in open("input.txt", "r"):
-    if drawCombinations[input[0]] == input[2]:  # draw
-        score += 3
-    elif winCombinations[input[0]] == input[2]:  # win
-        score += 6
-    match input[2]:
-        case "X":
-            score += 1
-        case "Y":
-            score += 2
-        case "Z":
-            score += 3
-
+    score += (ord(input[2]) - ord("X")) * 3  # (X/Y/Z - X) * 3 = 0/1/2 * 3 = 0/3/6
+    playerInput: str = combinations[input[2]][input[0]]
+    score += ord(playerInput) - ord("X") + 1  # X/Y/Z - X + 1 = 0/1/2 + 1 = 1/2/3
 print(str(score))
