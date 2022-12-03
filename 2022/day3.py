@@ -5,9 +5,11 @@ def get_character_priority(char: str):
 
 
 priorities: int = 0
-for line in open("input.txt", "r"):
-    for character in line[:len(line) // 2]:
-        if line[len(line) // 2:].count(character) >= 1:
+lines = open("input.txt", "r").readlines()
+for i in range(len(lines) // 3):
+    line1, line2, line3 = lines[i * 3], lines[i * 3 + 1], lines[i * 3 + 2]
+    for character in line1:
+        if line2.count(character) >= 1 and line3.count(character) >= 1:
             priorities += get_character_priority(character)
             break
 
