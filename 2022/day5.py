@@ -11,17 +11,19 @@ crates = [
 ]
 
 
-def move_crate(fromindex, toindex):
-    crates[toindex].append(crates[fromindex][-1])
-    crates[fromindex].pop()
+def move_crate(amount, fromindex, toindex):
+    popIndex = len(crates[fromindex]) - amount
+    while amount > 0:
+        crates[toindex].append(crates[fromindex][len(crates[fromindex]) - amount])
+        crates[fromindex].pop(popIndex)
+        amount -= 1
 
 
 for line in open("input.txt", "r"):
     if not line.startswith("move "):
         continue
     lineParts = line.split(" ")
-    for i in range(int(lineParts[1])):
-        move_crate(int(lineParts[3]) - 1, int(lineParts[5]) - 1)
+    move_crate(int(lineParts[1]), int(lineParts[3]) - 1, int(lineParts[5]) - 1)
 
 for stack in crates:
     print(stack[-1], end="")
