@@ -1,4 +1,4 @@
-def is_packet_marker(marker: str):
+def is_marker(marker: str):
     for i in range(0, len(marker) - 1):
         if marker.count(marker[i]) > 1:
             return False
@@ -6,7 +6,8 @@ def is_packet_marker(marker: str):
 
 
 line = open("input.txt", "r").readline()
-for i in range(3, len(line)):
-    if is_packet_marker(line[i - 3:i + 1]):
-        print(line[i - 3:i + 1] + " => " + str(i + 1))
+markerlength = 14
+for i in range(markerlength, len(line)):
+    if is_marker(line[i - markerlength:i]):
+        print(line[i - markerlength:i] + " => " + str(i))
         break
