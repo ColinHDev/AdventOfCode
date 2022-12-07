@@ -54,8 +54,8 @@ recursive_directory_loop(hierarchy)
 """
 
 directory_file_sizes = {"/": 0}
-directory_hierarchy = {}
-current_hierarchy = ""
+directory_hierarchy = {"/": {}}
+current_hierarchy = "/"
 
 for line in open("input.txt", "r"):
     if line.startswith("$ cd "):
@@ -87,11 +87,12 @@ def get_directory_size(hierarchy: str):
     return size
 
 
-size_sum = 0
-for dir_hierarchy in directory_file_sizes:
-    directory_size = get_directory_size(dir_hierarchy)
-    if directory_size > 100000:
-        continue
-    size_sum += directory_size
+smallest_dir_hierarchy = "/"
+free_space = 70000000 - get_directory_size("/")
 
-print(size_sum)
+for dir_hierarchy in directory_file_sizes:
+    new_free_space = free_space + get_directory_size(dir_hierarchy)
+    if 30000000 < new_free_space < free_space + get_directory_size(smallest_dir_hierarchy):
+        smallest_dir_hierarchy = dir_hierarchy
+
+print(get_directory_size(smallest_dir_hierarchy))
